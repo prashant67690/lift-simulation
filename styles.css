@@ -1,0 +1,136 @@
+header {
+    display: flex;
+    justify-content: center;
+  }
+
+.heading{
+        text-align: center;
+        position: relative;
+        width: 30rem;
+        background-color: #2a8ed6;
+        color:  #c7cdcd;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
+        padding: 2rem 1rem;
+        font-size: 3rem;
+        font-weight: 600;
+        
+}
+
+.form-section {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+.form-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.input-values input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.input-values input[type="number"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.input-values .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+ .btn:hover {
+    background-color: #0056b3;
+}
+
+
+#floor-container{
+    visibility: hidden;
+    overflow: auto;
+    background-color:#c7cdcd;
+}
+
+.floor{
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 2vw;
+    gap: 2vw;
+    border-top: 1px solid #007bff;
+    border-bottom: 1px solid #007bff;
+}
+
+.floor .floor-number{
+    color: #007bff;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.floor-details{
+    margin-right: 2rem;
+    
+}
+
+
+.lift{
+    height: 80px;
+    width: 80px;
+    background-color:#6c757d;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.door{
+    background-color: #444;
+    height: 100%;
+    width: 50%;
+    transition: all 2.5s;
+}
+
+.left-door{
+    border-right: 1px solid #333;
+}
+
+.right-door{
+    border-left: 1px solid #333;
+}
+
+.left-move{
+    transform: translateX(-100%);
+}
+
+.right-move{
+    transform: translateX(100%);
+}
