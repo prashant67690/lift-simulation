@@ -140,7 +140,7 @@ function moveLift(floorId, liftId) {
   const floorNumber = parseInt(arr[arr.length - 1]);
   const prevFloor = liftAt.get(liftId);
   const diff = Math.abs(prevFloor - floorNumber);
-  const transitionDuration = diff * 2;
+  const transitionDuration = 2;
   lift.style.transform = `translateY(-${floorNumber * floorHeight}px)`;
   lift.style.transition = `all ${transitionDuration}s`;
   console.log(lift);
