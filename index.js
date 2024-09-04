@@ -4,6 +4,7 @@ let liftsValue, floorValue;
 
 const liftsAvialable = new Map();
 const liftAt = new Map();
+const liftPositions = new Map();
 const floorLiftMap = new Map();
 const pendingCalls = [];
 
@@ -15,12 +16,7 @@ document.querySelector("#btn").addEventListener("click", (event) => {
   floorValue = parseInt(floorInput.value);
   liftsValue = parseInt(liftInput.value);
 
-  if (
-    floorValue <= 0 ||
-    floorValue > 50 ||
-    liftsValue <= 0 ||
-    liftsValue > 10
-  ) {
+  if (floorValue <= 0 || liftsValue <= 0) {
     alert("Invalid input! Try again.");
     return;
   }
@@ -87,6 +83,7 @@ function displyLifts(totalLifts) {
             `;
     liftsAvialable.set(`lift-${liftNumber}`, true);
     liftAt.set(`lift-${liftNumber}`, 0);
+    liftPositions.set(liftNumber, 0);
     groundFloor.appendChild(currentLift);
   }
 }
@@ -104,14 +101,31 @@ function handleLiftCall(event) {
     return;
   }
 
+  let closestLiftId = null;
+  let closestDistance = Infinity;
+
   for (let liftNumber = 1; liftNumber <= liftsValue; liftNumber++) {
     const liftId = `lift-${liftNumber}`;
     if (liftsAvialable.get(liftId)) {
-      moveLift(floorId, liftId);
-      return;
+      const liftFloorNumber = liftPositions.get(
+        parseInt(liftId.split("-")[1], 10)
+      );
+      const distance = Math.abs(liftFloorNumber - floorId);
+      console.log(distance);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestLiftId = liftId;
+      }
     }
   }
-
+  console.log(liftPositions);
+  console.log(closestDistance);
+  console.log(closestLiftId);
+  if (closestLiftId !== null) {
+    moveLift(floorId, closestLiftId);
+  } else {
+    pendingCalls.push(floorId);
+  }
   pendingCalls.push(floorId);
 }
 
@@ -147,8 +161,9 @@ function moveLift(floorId, liftId) {
   setTimeout(() => {
     openAndCloseDoors(floorId, liftId);
   }, transitionDuration * 1000);
-
+  const LiftNo = parseInt(liftId.split("-")[1], 10);
   liftAt.set(liftId, floorNumber);
+  liftAt.set(LiftNo, floorNumber);
 }
 
 function openAndCloseDoors(floorId, liftId) {
