@@ -81,6 +81,7 @@ header {
 }
 
 .floor{
+
     height: 200px;
     display: flex;
     flex-direction: row;
@@ -89,6 +90,7 @@ header {
     gap: 2vw;
     border-top: 1px solid #007bff;
     border-bottom: 1px solid #007bff;
+    overflow: visible;
 }
 
 .floor .floor-number{
@@ -104,18 +106,17 @@ header {
 
 
 .lift{
-    height: 80px;
+    height: 100px;
     width: 80px;
     background-color:#6c757d;
     display: flex;
     flex-direction: row;
-    overflow: hidden;
 }
 
 .door{
     background-color: #444;
-    height: 100%;
-    width: 50%;
+    height: 100px;
+    width: 80px;
     transition: all 2.5s;
 }
 

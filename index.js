@@ -16,8 +16,8 @@ document.querySelector("#btn").addEventListener("click", (event) => {
   floorValue = parseInt(floorInput.value);
   liftsValue = parseInt(liftInput.value);
 
-  if (floorValue <= 0 || liftsValue <= 0 || liftsValue > 40) {
-    alert("Invalid input! Try again.");
+  if (floorValue <= 0 || liftsValue <= 0) {
+    alert("Invalid input! values Cannot Be Negative or zero.");
     return;
   }
 
