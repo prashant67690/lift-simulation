@@ -106,6 +106,7 @@ header {
 
 
 .lift{
+    overflow: hidden;
     height: 100px;
     width: 80px;
     background-color:#6c757d;
