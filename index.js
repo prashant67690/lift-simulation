@@ -1,4 +1,4 @@
-const floorHeight = 200;
+const floorHeight = 202;
 
 let liftsValue, floorValue;
 
@@ -16,7 +16,7 @@ document.querySelector("#btn").addEventListener("click", (event) => {
   floorValue = parseInt(floorInput.value);
   liftsValue = parseInt(liftInput.value);
 
-  if (floorValue <= 0 || liftsValue <= 0) {
+  if (floorValue <= 0 || liftsValue <= 0 || liftsValue > 40) {
     alert("Invalid input! Try again.");
     return;
   }
@@ -126,7 +126,6 @@ function handleLiftCall(event) {
   } else {
     pendingCalls.push(floorId);
   }
-  pendingCalls.push(floorId);
 }
 
 function moveLift(floorId, liftId) {
@@ -163,7 +162,7 @@ function moveLift(floorId, liftId) {
   }, transitionDuration * 1000);
   const LiftNo = parseInt(liftId.split("-")[1], 10);
   liftAt.set(liftId, floorNumber);
-  liftAt.set(LiftNo, floorNumber);
+  liftPositions.set(LiftNo, floorNumber);
 }
 
 function openAndCloseDoors(floorId, liftId) {
