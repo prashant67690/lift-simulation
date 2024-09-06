@@ -1,11 +1,14 @@
 const floorHeight = 202;
 
 let liftsValue, floorValue;
+let btnClicked;
 
+const floorUpLiftCount = new Map();
+const floorDownLiftCount = new Map();
 const liftsAvialable = new Map();
 const liftAt = new Map();
 const liftPositions = new Map();
-const floorLiftMap = new Map();
+
 const pendingCalls = [];
 
 document.querySelector("#btn").addEventListener("click", (event) => {
@@ -50,7 +53,9 @@ function displyFloors(totalFloors) {
       .addEventListener("click", (event) => handleLiftCall(event));
 
     floorContainer.appendChild(currfloor);
-    floorLiftMap.set(floorId, null);
+
+    floorUpLiftCount.set(fno, null);
+    floorDownLiftCount.set(fno, null);
   }
   const groundFloor = document.createElement("section");
   groundFloor.className = "floor";
@@ -65,9 +70,9 @@ function displyFloors(totalFloors) {
     .querySelector(".up")
     .addEventListener("click", (event) => handleLiftCall(event));
   floorContainer.appendChild(groundFloor);
-  floorLiftMap.set("floor-0", null);
+
+  floorUpLiftCount.set(0, null);
   const topDiv = document.getElementById(totalFloors);
-  console.log(topDiv);
   topDiv.style.visibility = "hidden";
   floorContainer.style.visibility = "visible";
   floorContainer.style.border = `2px solid #007bff`;
@@ -91,16 +96,32 @@ function displyLifts(totalLifts) {
 }
 
 function handleLiftCall(event) {
+  let buttonType;
   const calledfloor = event.target;
+  btnClicked = event.target;
   const floorId = calledfloor.id;
+  // calledfloor.disabled = true;
 
-  if (floorLiftMap.get(floorId) != null) {
-    const mappedLiftId = floorLiftMap.get(floorId);
-    if (liftsAvialable.get(mappedLiftId)) {
-      liftsAvialable.set(mappedLiftId, false);
-      openAndCloseDoors(floorId, mappedLiftId);
+  if (calledfloor.classList[1] == "up") {
+    buttonType = "up";
+    if (floorUpLiftCount.get(floorId) != null) {
+      const mappedLiftId = floorUpLiftCount.get(floorId);
+      if (liftsAvialable.get(mappedLiftId)) {
+        liftsAvialable.set(mappedLiftId, false);
+        openAndCloseDoors(floorId, mappedLiftId);
+      }
+      return;
     }
-    return;
+  } else {
+    buttonType = "down";
+    if (floorDownLiftCount.get(floorId) != null) {
+      const mappedLiftId = floorDownLiftCount.get(floorId);
+      if (liftsAvialable.get(mappedLiftId)) {
+        liftsAvialable.set(mappedLiftId, false);
+        openAndCloseDoors(floorId, mappedLiftId);
+      }
+      return;
+    }
   }
 
   let closestLiftId = null;
@@ -113,41 +134,39 @@ function handleLiftCall(event) {
         parseInt(liftId.split("-")[1], 10)
       );
       const distance = Math.abs(liftFloorNumber - floorId);
-      console.log(distance);
+
       if (distance < closestDistance) {
         closestDistance = distance;
         closestLiftId = liftId;
       }
     }
   }
-  console.log(liftPositions);
-  console.log(closestDistance);
-  console.log(closestLiftId);
+
   if (closestLiftId !== null) {
-    moveLift(floorId, closestLiftId);
+    moveLift(floorId, closestLiftId, buttonType);
   } else {
     pendingCalls.push(floorId);
   }
 }
 
-function moveLift(floorId, liftId) {
-  if (floorLiftMap.get(floorId) != null) {
-    const mappedLiftId = floorLiftMap.get(floorId);
-    if (liftsAvialable.get(mappedLiftId)) {
-      liftsAvialable.set(mappedLiftId, false);
-      openAndCloseDoors(floorId, mappedLiftId);
-    }
-    return;
-  }
-
+function moveLift(floorId, liftId, buttonType) {
   liftsAvialable.set(liftId, false);
-  floorLiftMap.set(floorId, liftId);
 
-  floorLiftMap.forEach((value, key) => {
-    if (key !== floorId && value === liftId) {
-      floorLiftMap.set(key, null);
-    }
-  });
+  if (buttonType === "up") {
+    floorUpLiftCount.set(floorId, liftId);
+    floorUpLiftCount.forEach((value, key) => {
+      if (key !== floorId && value === liftId) {
+        floorUpLiftCount.set(key, null);
+      }
+    });
+  } else {
+    floorDownLiftCount.set(floorId, liftId);
+    floorDownLiftCount.forEach((value, key) => {
+      if (key !== floorId && value === liftId) {
+        floorDownLiftCount.set(key, null);
+      }
+    });
+  }
 
   const floor = document.getElementById(floorId);
   const lift = document.getElementById(`${liftId}`);
@@ -158,7 +177,7 @@ function moveLift(floorId, liftId) {
   const transitionDuration = diff * 2;
   lift.style.transform = `translateY(-${floorNumber * floorHeight}px)`;
   lift.style.transition = `all linear ${transitionDuration}s`;
-  console.log(lift);
+
   setTimeout(() => {
     openAndCloseDoors(floorId, liftId);
   }, transitionDuration * 1000);
@@ -176,7 +195,9 @@ function openAndCloseDoors(floorId, liftId) {
   setTimeout(() => {
     leftDoor.classList.remove("left-move");
     rightDoor.classList.remove("right-move");
-
+    // setTimeout(() => {
+    //   btnClicked.disabled = false;
+    // }, 2000);
     setTimeout(() => {
       liftsAvialable.set(liftId, true);
       if (pendingCalls.length > 0) {
