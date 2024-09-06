@@ -75,22 +75,16 @@ header {
 
 
 #floor-container{
-    visibility: hidden;
-    overflow: auto;
     background-color:#c7cdcd;
 }
 
 .floor{
-
     height: 200px;
     display: flex;
-    flex-direction: row;
     align-items: center;
-    padding-left: 2vw;
-    gap: 2vw;
+    padding-left: 2rem;
     border-top: 1px solid #007bff;
-    border-bottom: 1px solid #007bff;
-    overflow: visible;
+    border-bottom: 1px solid #007bff; 
 }
 
 .floor .floor-number{
@@ -101,7 +95,6 @@ header {
 
 .floor-details{
     margin-right: 2rem;
-    
 }
 
 
@@ -109,13 +102,16 @@ header {
     overflow: hidden;
     height: 100px;
     width: 80px;
-    background-color:#6c757d;
+    min-width: 80px;
+    background-color:#6c757e;
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    z-index: 1;
+    margin-right: 1.5rem;
 }
 
 .door{
-    background-color: #444;
+    background-color: black;
     height: 100px;
     width: 80px;
     transition: all 2.5s;
@@ -135,4 +131,10 @@ header {
 
 .right-move{
     transform: translateX(100%);
+}
+
+.dis{
+    pointer-events: none;
+    opacity: 0.5; 
+    cursor: not-allowed;
 }
