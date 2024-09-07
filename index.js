@@ -54,8 +54,8 @@ function displyFloors(totalFloors) {
 
     floorContainer.appendChild(currfloor);
 
-    floorUpLiftCount.set(fno, null);
-    floorDownLiftCount.set(fno, null);
+    floorUpLiftCount.set(fno.toString(), null);
+    floorDownLiftCount.set(fno.toString(), null);
   }
   const groundFloor = document.createElement("section");
   groundFloor.className = "floor";
@@ -101,7 +101,8 @@ function handleLiftCall(event) {
   btnClicked = event.target;
   const floorId = calledfloor.id;
   // calledfloor.disabled = true;
-
+  console.log(floorUpLiftCount);
+  console.log(floorDownLiftCount);
   if (calledfloor.classList[1] == "up") {
     buttonType = "up";
     if (floorUpLiftCount.get(floorId) != null) {
@@ -144,6 +145,8 @@ function handleLiftCall(event) {
 
   if (closestLiftId !== null) {
     moveLift(floorId, closestLiftId, buttonType);
+    // console.log(floorUpLiftCount);
+    // console.log(floorDownLiftCount);
   } else {
     pendingCalls.push(floorId);
   }
@@ -154,19 +157,21 @@ function moveLift(floorId, liftId, buttonType) {
 
   if (buttonType === "up") {
     floorUpLiftCount.set(floorId, liftId);
-    floorUpLiftCount.forEach((value, key) => {
-      if (key !== floorId && value === liftId) {
-        floorUpLiftCount.set(key, null);
-      }
-    });
+    // console.log(floorUpLiftCount);
   } else {
     floorDownLiftCount.set(floorId, liftId);
-    floorDownLiftCount.forEach((value, key) => {
-      if (key !== floorId && value === liftId) {
-        floorDownLiftCount.set(key, null);
-      }
-    });
+    // console.log(floorDownLiftCount);
   }
+  floorUpLiftCount.forEach((value, key) => {
+    if (key !== floorId && value === liftId) {
+      floorUpLiftCount.set(key, null);
+    }
+  });
+  floorDownLiftCount.forEach((value, key) => {
+    if (key !== floorId && value === liftId) {
+      floorDownLiftCount.set(key, null);
+    }
+  });
 
   const floor = document.getElementById(floorId);
   const lift = document.getElementById(`${liftId}`);
