@@ -19,6 +19,11 @@ document.querySelector("#btn").addEventListener("click", (event) => {
   floorValue = parseInt(floorInput.value);
   liftsValue = parseInt(liftInput.value);
 
+  if (Number.isNaN(floorValue) || Number.isNaN(liftsValue)) {
+    alert("Invalid input! Please Enter A Number");
+    return;
+  }
+
   if (floorValue <= 0 || liftsValue <= 0) {
     alert("Invalid input! values Cannot Be Negative or zero.");
     return;
@@ -93,6 +98,10 @@ function displyLifts(totalLifts) {
     liftPositions.set(liftNumber, 0);
     groundFloor.appendChild(currentLift);
   }
+
+  const floorContainer = document.querySelector("#floor-container");
+  const widthcal = totalLifts * 110;
+  floorContainer.style.width = totalLifts <= 10 ? "100%" : `${widthcal}px`;
 }
 
 function handleLiftCall(event) {
