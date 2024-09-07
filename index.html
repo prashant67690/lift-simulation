@@ -12,16 +12,16 @@
             Lift-simulation
         </h1>
     </header>
-    <div class="form-section container" id="input-box">
+    <form class="form-section container" id="input-box">
         <section class="input-values">
-            <input type="number" id="floor" placeholder="Enter The No of floors">
+            <input type="number" id="floor" placeholder="Enter The No of floors"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
             <br>
-            <input type="number" id="lift" placeholder="Enter The No of lifts">
+            <input type="number" id="lift" placeholder="Enter The No of lifts"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
             <br>
             <br>
             <button class="btn" id="btn" >Generate</button>
         </section>
-    </div>
+    </form>
     <section id="floor-container"></section>
     <script src="index.js"></script>
 </body>
