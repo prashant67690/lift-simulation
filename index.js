@@ -31,7 +31,16 @@ document.querySelector("#btn").addEventListener("click", (event) => {
 
   const inputBox = document.querySelector("#input-box");
   inputBox.style.display = "none";
-
+  const heading = document.querySelector("#heading");
+  const backButton = document.createElement("button");
+  backButton.innerText = "Go Back To The Home Page";
+  backButton.classList.add("bttn");
+  backButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    location.reload();
+  });
+  backButton.style = "margin:4rem";
+  heading.appendChild(backButton);
   displyFloors(floorValue);
   displyLifts(liftsValue);
 });

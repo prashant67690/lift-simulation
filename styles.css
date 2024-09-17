@@ -3,6 +3,14 @@ header {
     justify-content: center;
   }
 
+  #heading{
+    display: flex;
+  }
+
+  .bttn{
+    background-color: #6c757d;
+  }
+
 .heading{
         text-align: center;
         position: relative;
